@@ -322,3 +322,9 @@ def create_leauge_and_rounds(sign_ups_close, number_of_rounds, round_duration):
     conn.close()
   
   None
+
+def get_next_unstarted_rounds():
+  return connect_and_return(""" SELECT * FROM two_player_league_rounds
+                                WHERE has_started IS FALSE
+                                  AND start_time < CURRENT_TIMESTAMP
+                            """, None)

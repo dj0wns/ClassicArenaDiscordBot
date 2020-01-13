@@ -16,6 +16,9 @@ time_conversion_delta = datetime.timedelta(hours=3) #server is 3 hours behind ea
 BOT_LEADING_CHAR='$'
 MATCHES_TO_DISPLAY=20
 
+def autoUpdateTasks():
+  None
+
 async def checkArguments(channel, argsExpected, commandText, tokens):
   if len(tokens) < argsExpected:
     await channel.send(commandText + " requires at least " + str(argsExpected) + " argument" + ("s." if argsExpected > 1 else "."))  
@@ -266,6 +269,11 @@ client = discord.Client()
 async def on_ready(): #Runs on connection
   print(f'We have logged in as {client.user}')
   await client.change_presence(activity=discord.Game(name="Quack"))
+
+  while True:
+    autoUpdateTasks()
+
+    await asyncio.sleep(60) #wait 60 seconds between rechecking
 
 @client.event
 async def on_message(message):
